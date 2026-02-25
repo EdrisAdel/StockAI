@@ -125,10 +125,10 @@ input, textarea, select { outline: none; transition: border-color 0.15s, box-sha
 .preset-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 .preset-card {
   background: #fff; border-radius: 14px; padding: 18px; cursor: pointer;
-  border: 2px solid transparent; transition: all 0.2s;
+  border: 1px solid transparent; transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0,0,0,.06);
 }
-.preset-card:hover { border-color: #6c63ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,.12); }
+.preset-card:hover { border-color: #63b4ff; transform: translateY(-1px); box-shadow: 0 1px 4px rgba(99, 169, 255, 0.12); }
 
 /* ─── Table / screener ─── */
 .table-header-bar {

@@ -655,6 +655,11 @@ export default function App() {
           </div>
         )}
       </div>
+      <footer className="site-footer">
+        <div className="container">
+          <small style={{ color: '#888' }}>MIT License · 2026 Edris Adel</small>
+        </div>
+      </footer>
     </div>
   );
 }
