@@ -2,7 +2,7 @@
 
 > Screen 500+ S&P 500 stocks using plain English. No finance degree required.
 
-**[Live Demo](https://stockai-project.vercel.app)** · **[Backend API](https://stockai-production-0f6c.up.railway.app/)**
+**[Live Demo](https://stockai-project.vercel.app)** · **[Backend API](https://stockai-production-0f6c.up.railway.app/docs)**
 
 ---
 
@@ -12,7 +12,7 @@ StockAI is a full-stack stock screening platform that lets users find equities u
 
 Built to demonstrate end-to-end product development across data engineering, machine learning, backend systems, and AI integration.
 
-![Demo GIF](./assets/demo.gif)
+![Demo GIF](./assets/stockai.gif)
 
 ---
 
