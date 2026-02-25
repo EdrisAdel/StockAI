@@ -2,7 +2,7 @@
 
 > Screen 500+ S&P 500 stocks using plain English. No finance degree required.
 
-**[Live Demo](https://StockAI.vercel.app)** · **[Backend API](https://StockAI-api.railway.app/docs)**
+**[Live Demo](https://stockai-project.vercel.app)** · **[Backend API](https://stockai-production-0f6c.up.railway.app/)**
 
 ---
 
