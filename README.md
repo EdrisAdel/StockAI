@@ -12,7 +12,7 @@ StockAI is a full-stack stock screening platform that lets users find equities u
 
 Built to demonstrate end-to-end product development across data engineering, machine learning, backend systems, and AI integration.
 
-![Demo GIF](./assets/stockai.gif)
+![Demo GIF](./frontend/assets/stockai.gif)
 
 ---
 
