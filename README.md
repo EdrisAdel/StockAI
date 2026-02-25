@@ -182,3 +182,4 @@ StockAI/
 ## Author
 
 **Edris Adel** — [edrisadel.dev](https://edrisadel.dev) · [LinkedIn](https://linkedin.com/in/edrisadel) · [GitHub](https://github.com/EdrisAdel)
+License MIT
