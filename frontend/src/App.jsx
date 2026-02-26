@@ -57,6 +57,122 @@ const sampleQueries = [
   "Which stocks have gained the most in the last 20 days?",
 ];
 
+function HomeSkeleton() {
+  return (
+    <div className="page-col skeleton-page">
+      <div className="hero">
+        <div className="skeleton-line skeleton-title" />
+        <div className="skeleton-line skeleton-subtitle" />
+        <div className="skeleton-input" />
+      </div>
+      <div className="card">
+        <div className="skeleton-line skeleton-card-title" />
+        <div className="skeleton-grid-2">
+          <div>
+            <div className="skeleton-line skeleton-label" />
+            <div className="skeleton-list">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="skeleton-pill" />
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="skeleton-line skeleton-label" />
+            <div className="skeleton-list">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="skeleton-pill" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="skeleton-line skeleton-card-title" style={{ width: 140, marginBottom: 14 }} />
+        <div className="skeleton-grid-3">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="skeleton-block" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScreenerSkeleton() {
+  return (
+    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+      <div className="table-header-bar">
+        <div className="skeleton-line" style={{ width: 90, height: 14 }} />
+      </div>
+      <div style={{ padding: "0 24px" }}>
+        <div className="table-cols">
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="skeleton-line" style={{ flex: 1, height: 10, marginRight: 12 }} />
+          ))}
+          <div style={{ width: 40 }} />
+        </div>
+        {[...Array(7)].map((_, index) => (
+          <div key={index} className="skeleton-row">
+            <div style={{ flex: 2 }}>
+              <div className="skeleton-line" style={{ width: 80, marginBottom: 8 }} />
+              <div className="skeleton-line" style={{ width: 140, height: 10 }} />
+            </div>
+            <div className="skeleton-line" style={{ flex: 1, height: 22, borderRadius: 999 }} />
+            <div className="skeleton-line" style={{ flex: 1, marginLeft: 16 }} />
+            <div className="skeleton-line" style={{ flex: 1, marginLeft: 16 }} />
+            <div className="skeleton-line" style={{ flex: 1, marginLeft: 16 }} />
+            <div className="skeleton-line" style={{ width: 32, height: 32, borderRadius: 999, marginLeft: 16 }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DetailSkeleton() {
+  return (
+    <div className="page-col skeleton-page">
+      <div className="card">
+        <div className="skeleton-line" style={{ width: 140, height: 30, marginBottom: 10 }} />
+        <div className="skeleton-line" style={{ width: 220, height: 12 }} />
+      </div>
+      <div className="card">
+        <div className="skeleton-line" style={{ width: 120, marginBottom: 16 }} />
+        <div className="skeleton-chart" />
+      </div>
+      <div className="stats-grid">
+        {[...Array(8)].map((_, index) => (
+          <div key={index} className="stat-box">
+            <div className="skeleton-line" style={{ width: "50%", margin: "0 auto 10px", height: 10 }} />
+            <div className="skeleton-line" style={{ width: "70%", margin: "0 auto", height: 18 }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WatchlistSkeleton() {
+  return (
+    <div className="page-col skeleton-page">
+      <div className="skeleton-line" style={{ width: 180, height: 28 }} />
+      <div className="card" style={{ padding: 0 }}>
+        <div style={{ padding: "0 24px" }}>
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="skeleton-row">
+              <div className="skeleton-line" style={{ width: 44, height: 44, borderRadius: 12 }} />
+              <div style={{ flex: 2, marginLeft: 14 }}>
+                <div className="skeleton-line" style={{ width: 80, marginBottom: 8 }} />
+              </div>
+              <div className="skeleton-line" style={{ width: 32, height: 32, borderRadius: 999 }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════
    ROOT COMPONENT
    ═══════════════════════════════════════════ */
@@ -69,21 +185,38 @@ export default function App() {
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [detail, setDetail] = useState(null);
   const [detailPeriod, setDetailPeriod] = useState("1M");
-  const [watchlist, setWatchlist] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("watchlist")) || []; } catch { return []; }
-  });
+  const [watchlist, setWatchlist] = useState([]);
+  const [watchlistLoading, setWatchlistLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   const [movers, setMovers] = useState(null);
+  const [moversLoading, setMoversLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState("");
   const searchRef = useRef(null);
 
+  useEffect(() => {
+    try {
+      setWatchlist(JSON.parse(localStorage.getItem("watchlist")) || []);
+    } catch {
+      setWatchlist([]);
+    } finally {
+      setWatchlistLoading(false);
+    }
+  }, []);
+
   // persist watchlist
-  useEffect(() => { localStorage.setItem("watchlist", JSON.stringify(watchlist)); }, [watchlist]);
+  useEffect(() => {
+    if (!watchlistLoading) {
+      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+    }
+  }, [watchlist, watchlistLoading]);
 
   // load movers on mount
   useEffect(() => {
-    getDailyMovers(5).then(setMovers).catch(() => {});
+    getDailyMovers(5)
+      .then(setMovers)
+      .catch(() => {})
+      .finally(() => setMoversLoading(false));
   }, []);
 
   /* ── actions ── */
@@ -189,6 +322,9 @@ export default function App() {
 
         {/* ═══════ HOME ═══════ */}
         {page === "home" && (
+          moversLoading ? (
+            <HomeSkeleton />
+          ) : (
           <div className="page-col">
             {/* Hero */}
             <div className="hero">
@@ -289,6 +425,7 @@ export default function App() {
               </div>
             </div>
           </div>
+          )
         )}
 
         {/* ═══════ SCREENER ═══════ */}
@@ -314,12 +451,7 @@ export default function App() {
               </div>
             )}
 
-            {searching && (
-              <div className="center-empty">
-                <div style={{ fontSize: 32, marginBottom: 8 }}>🔍</div>
-                <p>Analyzing S&P 500…</p>
-              </div>
-            )}
+            {searching && <ScreenerSkeleton />}
 
             {!searching && results.length === 0 && (
               <div className="center-empty">
@@ -414,9 +546,7 @@ export default function App() {
             </button>
 
             {detailLoading && (
-              <div className="center-empty">
-                <p>Loading {selectedTicker}…</p>
-              </div>
+              <DetailSkeleton />
             )}
 
             {!detailLoading && detail && (() => {
@@ -616,6 +746,10 @@ export default function App() {
         {/* ═══════ WATCHLIST ═══════ */}
         {page === "watchlist" && (
           <div className="page-col">
+            {watchlistLoading ? (
+              <WatchlistSkeleton />
+            ) : (
+              <>
             <h1 className="section-title" style={{ fontSize: 24 }}>
               Your Watchlist
             </h1>
@@ -651,6 +785,8 @@ export default function App() {
                   ))}
                 </div>
               </div>
+            )}
+              </>
             )}
           </div>
         )}

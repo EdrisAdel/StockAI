@@ -210,6 +210,65 @@ input, textarea, select { outline: none; transition: border-color 0.15s, box-sha
 .clr-green { color: #22c55e; }
 .clr-red   { color: #ef4444; }
 
+/* ─── Skeletons ─── */
+.skeleton-page { animation: fadeIn .2s ease-in; }
+
+.skeleton-line,
+.skeleton-input,
+.skeleton-pill,
+.skeleton-block,
+.skeleton-chart {
+  position: relative;
+  overflow: hidden;
+  background: #e9edf5;
+}
+
+.skeleton-line::after,
+.skeleton-input::after,
+.skeleton-pill::after,
+.skeleton-block::after,
+.skeleton-chart::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.65), transparent);
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-line { height: 14px; border-radius: 8px; }
+.skeleton-title { width: 360px; max-width: 90%; height: 40px; margin: 0 auto 14px; border-radius: 10px; }
+.skeleton-subtitle { width: 320px; max-width: 80%; height: 16px; margin: 0 auto 24px; }
+.skeleton-input { width: 580px; max-width: 100%; height: 54px; border-radius: 14px; margin: 0 auto; }
+.skeleton-card-title { width: 180px; height: 18px; }
+.skeleton-label { width: 120px; height: 12px; margin-bottom: 10px; }
+.skeleton-list { display: flex; flex-direction: column; gap: 8px; }
+.skeleton-pill { height: 34px; border-radius: 10px; }
+.skeleton-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.skeleton-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.skeleton-block { height: 84px; border-radius: 14px; }
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f4;
+}
+
+.skeleton-chart { height: 200px; border-radius: 12px; }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -226,4 +285,6 @@ input, textarea, select { outline: none; transition: border-color 0.15s, box-sha
   .divider-v { width: 100%; height: 1px; }
   .navbar { padding: 0 12px; }
   .container { padding: 20px 12px; }
+  .skeleton-grid-2,
+  .skeleton-grid-3 { grid-template-columns: 1fr; }
 }
